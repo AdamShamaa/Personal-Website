@@ -18,8 +18,7 @@ import ReCAPTCHA from "react-google-recaptcha";
     position: "relative",
     width: "55rem",
     padding: "1.5rem",
-    maxWidth: "55rem",
-    height: "28rem"
+    maxWidth: "55rem"
 }
 
  const formControlStyle = {
@@ -171,6 +170,7 @@ const inputData = [
                             <Input inputProps={{autocomplete: "new-password", form: { autocomplete: "off"}}} error={this.state.errors["emailAddress"]} id="emailAddress" disableUnderline={this.state.isVerified} onChange={this.updateField} style={this.state.isVerified ? verifiedEmailInputStyle:emailInputStyle}/>
                             <FormHelperText style={{color: "red"}}>{this.state.errors["emailAddress"]}</FormHelperText>
                     </FormControl>
+                    <br /><br />
                     <FormControl style={formControlStyle}  variant="outlined" fullWidth={true} disabled={this.state.isVerified}>
                         <InputLabel htmlFor="content" style={this.state.isVerified ? verifiedInputLabelStyle: inputLabelStyle}>Content</InputLabel>
                         <OutlinedInput autoComplete="new-password" error={this.state.errors.content} id="content" multiline={true} rows={7} onChange={this.updateField} disableUnderline={this.state.isVerified} style={this.state.isVerified ? {borderBottom: "2px dotted green"}:{}}/>
