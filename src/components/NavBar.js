@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Fade from '@material-ui/core/Fade';
 
 import { Link } from 'react-scroll'
 
@@ -34,18 +35,20 @@ import { Link } from 'react-scroll'
 class NavBar extends React.Component {
     render(){
         return (
-            <Tabs orientation="vertical" style={navBarStyle}>
-                {this.props.menuItems.map((menuItem,index) => {
-                    return (
-                    <Link to={`section${index}`} offset={-150} smooth={true}>
-                        <Tab 
-                            key = {index} 
-                            label={menuItem} 
-                            style={(this.props.selected == index) ? selectedNavElementStyle : navElementsStyle} 
-                        />
-                    </Link>
-                )})}
-            </Tabs>
+            <Fade in={true} timeout={{enter: 3500}}>
+              <Tabs orientation="vertical" style={navBarStyle}>
+                  {this.props.menuItems.map((menuItem,index) => {
+                      return (
+                      <Link to={`section${index}`} offset={-150} smooth={true}>
+                          <Tab 
+                              key = {index} 
+                              label={menuItem} 
+                              style={(this.props.selected == index) ? selectedNavElementStyle : navElementsStyle} 
+                          />
+                      </Link>
+                  )})}
+              </Tabs>
+            </Fade>
         )
     }
 }
