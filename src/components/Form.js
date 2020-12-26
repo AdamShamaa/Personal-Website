@@ -155,11 +155,11 @@ const inputData = [
                         </div>
                 </div>
                 <form >
-                    {inputData.map(input => {
+                    {inputData.map((input,index) => {
                         return (
-                        <FormControl style={formControlStyle} disabled={this.state.isVerified}>
+                        <FormControl style={formControlStyle} disabled={this.state.isVerified} key={index}>
                             <InputLabel htmlFor={input.funcName} style={this.state.isVerified ? verifiedInputLabelStyle: inputLabelStyle}>{input.name}</InputLabel>
-                            <Input inputProps={{autocomplete: "new-password", form: { autocomplete: "off"}}} error={this.state.errors[input.funcName]} id={input.funcName} disableUnderline={this.state.isVerified} onChange={this.updateField} style={this.state.isVerified ? verifiedDefaultInputStyle:defaultInputStyle}/>
+                            <Input inputProps={{autoComplete: "new-password", form: { autocomplete: "off"}}} error={this.state.errors[input.funcName] ? true : false} id={input.funcName} disableUnderline={this.state.isVerified} onChange={this.updateField} style={this.state.isVerified ? verifiedDefaultInputStyle:defaultInputStyle}/>
                             <FormHelperText style={{color: "red"}}>{this.state.errors[input.funcName]}</FormHelperText>
                         </FormControl>
                         )
@@ -167,13 +167,13 @@ const inputData = [
                     <br/>
                     <FormControl style={formControlStyle} disabled={this.state.isVerified}>
                             <InputLabel htmlFor="emailAddress" style={this.state.isVerified ? verifiedInputLabelStyle: inputLabelStyle}>Email Address</InputLabel>
-                            <Input inputProps={{autocomplete: "new-password", form: { autocomplete: "off"}}} error={this.state.errors["emailAddress"]} id="emailAddress" disableUnderline={this.state.isVerified} onChange={this.updateField} style={this.state.isVerified ? verifiedEmailInputStyle:emailInputStyle}/>
+                            <Input inputProps={{autoComplete: "new-password", form: { autocomplete: "off"}}} error={this.state.errors["emailAddress"] ? true : false} id="emailAddress" disableUnderline={this.state.isVerified} onChange={this.updateField} style={this.state.isVerified ? verifiedEmailInputStyle:emailInputStyle}/>
                             <FormHelperText style={{color: "red"}}>{this.state.errors["emailAddress"]}</FormHelperText>
                     </FormControl>
                     <br /><br />
                     <FormControl style={formControlStyle}  variant="outlined" fullWidth={true} disabled={this.state.isVerified}>
                         <InputLabel htmlFor="content" style={this.state.isVerified ? verifiedInputLabelStyle: inputLabelStyle}>Content</InputLabel>
-                        <OutlinedInput autoComplete="new-password" error={this.state.errors.content} id="content" multiline={true} rows={7} onChange={this.updateField} disableUnderline={this.state.isVerified} style={this.state.isVerified ? {borderBottom: "2px dotted green"}:{}}/>
+                        <OutlinedInput autoComplete="new-password" error={this.state.errors.content ? true : false} id="content" multiline={true} rows={7} onChange={this.updateField} disableUnderline={this.state.isVerified} style={this.state.isVerified ? {borderBottom: "2px dotted green"}:{}}/>
                         <FormHelperText style={{color: "red"}}>{this.state.errors.content}</FormHelperText>
                     </FormControl>
                     <FormControl style={{display:"flex", flexDirection:"row", width:"100%", alignItems:"center", justifyContent:"flex-start"}}>

@@ -39,7 +39,7 @@ class NavBar extends React.Component {
               <Tabs orientation="vertical" style={navBarStyle}>
                   {this.props.menuItems.map((menuItem,index) => {
                       return (
-                      <Link to={`section${index}`} offset={-150} smooth={true}>
+                      <Link to={`section${index}`} offset={-150} smooth={true} key = {index} >
                           <Tab 
                               key = {index} 
                               label={menuItem} 
@@ -55,8 +55,6 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
     menuItems: PropTypes.array.isRequired,
-    navBarStyle: PropTypes.object.isRequired,
-    navElementsStyle: PropTypes.object.isRequired,
     selected: PropTypes.number.isRequired
 }
 

@@ -48,6 +48,9 @@ const cardActionStyle = {
 }
 
 class Project extends React.Component {
+    constructor(props){
+        super(props)
+    }
     render(){
         return (
             <Card style={cardStyle} key={this.props.key}>
