@@ -18,21 +18,23 @@ import CallMadeIcon from '@material-ui/icons/CallMade';
  */
 
 const cardStyle = {
-    display: "block",
-    flexBasis: "16rem",
-    height: "auto",
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
     margin: "2rem",
-    paddingBottom: "1.3rem"
+    paddingBottom: "1.3rem",
+    justifyContent: "space-between"
 }
 
 const cardActionAreaStyle = {
-    height: "17.5rem",
-    width: "100%"
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
 }
 
 const cardMediaStyle = {
-    height: "15rem",
-    width: "100%"
+    height: "20rem",
+    minWidth: "23rem"
 }
 
 const projectInformationStyle = {
@@ -50,12 +52,12 @@ class Project extends React.Component {
         return (
             <Card style={cardStyle} key={this.props.key}>
                 <CardActionArea style={cardActionAreaStyle}>
-                    <CardMedia 
-                        component = "img"
-                        style= {cardMediaStyle}
-                        image= {this.props.imageName}
-                       
-                    />
+                    <CardMedia>
+                        <img 
+                        src={this.props.imageName}
+                        style={cardMediaStyle}
+                        ></img>
+                    </CardMedia>
                     <h5 style={projectInformationStyle}>
                         {this.props.name}
                     </h5>
