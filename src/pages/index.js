@@ -13,6 +13,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Project from "../components/Project"
 import { InView } from 'react-intersection-observer';
 import "@fontsource/open-sans" 
+import "@fontsource/open-sans/600.css" // Weight 500.
 
 import SimpleReactLightbox from 'simple-react-lightbox'
 import { useLightbox } from 'simple-react-lightbox'
@@ -20,14 +21,25 @@ import { SRLWrapper } from "simple-react-lightbox";
 import "../components/layout.css"
 
 // styles
-const pageStyles = {
+const pageStyle = {
   color: "#232129",
-  padding: "25px 96px 0 96px",
-  fontFamily: 'Open Sans'
+  fontFamily: 'Open Sans, sans-serif',
+  overflowX: "hidden",
+  maxWidth: "100%",
+  padding: "36px 96px 0 96px",
+  fontWeight: "500"
+}
+
+const introductoryDivStyle = {
+  position: "relative",
+  top: "5vh",
+  marginLeft: "1rem",
+  overflow: "hidden"
 }
 
 const introductoryHeadingStyle = {
-  fontSize: "2rem",
+  fontSize: "1.9rem",
+  fontWeight: "bold"
 }
 
 const nameHeadingStyle = {
@@ -46,7 +58,7 @@ const iconBarStyle = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
-  marginTop: "15rem"
+  marginTop: "29vh"
 }
 
 const iconStyle = {
@@ -63,17 +75,20 @@ const iconButtonStyle = {
 }
 
 const sectionStyle = {
-  width: "90%",
+  maxWidth: "100%",
   justifyContent: "center",
-  minHeight: "90vh",
-  margin: "2.5rem 0"
+  minHeight: "70vh",
+  margin: "10vh 0",
+  paddingRight: "100px"
 }
+
 
 const projectsBarStyle = {
   display: "flex",
   alignItems: "center",
   flexWrap: "wrap",
-  justifyContent: "space-between"
+  justifyContent: "space-around",
+  minWidth: "100%"
 }
 
 const markStyle = {
@@ -85,6 +100,17 @@ const markStyle = {
   wrap: "wrap",
   backgroundColor: "white"
 }
+
+//Mobile Styles
+const sectionStyleMobile = {...sectionStyle}
+sectionStyleMobile.paddingRight = "0px"
+
+const pageStyleMobile = {...pageStyle}
+pageStyleMobile.padding = "0 5%"
+pageStyleMobile.minWidth = "80%"
+
+const nameHeadingStyleMobile = {...nameHeadingStyle}
+nameHeadingStyleMobile.marginLeft= "0"
 
 //data
 const attributes = ["Student", "Software Developer"]
@@ -118,15 +144,15 @@ const projects = [
     gitHubLink: "https://github.com/AdamShamaa/Smart-Image-Resizing"
 }]
 
-
 //Page Elements
-const HomePage = () => {
+const HomePage = (props) => {
   return (
-    <div style = {sectionStyle} id="section0">
-      <h1 style = {introductoryHeadingStyle}>Hey There!</h1>  
-      <div>
-        <h2 style={nameHeadingStyle}>I'm Adam Shamaa, </h2>
-        <AttributeComponent attributes={attributes} style={attributeStyle} delayMS={2500}/>
+    <div>
+      <div style = {introductoryDivStyle}>
+        <h1 style = {introductoryHeadingStyle}>Hey There!</h1>  
+        <h2 style={props.isMobile ? nameHeadingStyleMobile: nameHeadingStyle}>I'm Adam Shamaa, </h2>
+        {props.isMobile ? <br /> : null}
+       <AttributeComponent attributes={attributes} style={attributeStyle} delayMS={1500}/>
       </div>
       <div style={iconBarStyle}>
           <IconButton href="mailto:adamshamaa@gmail.com" target="_blank" style={iconButtonStyle} children={<MailOutlineIcon style={iconStyle}/>}/>
@@ -137,46 +163,14 @@ const HomePage = () => {
   )
 }
 
-const AboutMe = () => {
-    const { openLightbox, closeLightbox } = useLightbox()
-    return (
-      <div style = {sectionStyle} id="section1">
-        <br/>
-        <h1 style = {introductoryHeadingStyle}>Here's a little bit about me</h1>  
-        <h2>I'm currently studying <mark style={markStyle}>Computer Engineering</mark> at the University of Waterloo. Two of my favorite things are learning + coffee and I have a passion for programming and working on projects whenever I get the chance (AKA whenever I'm not working on a school assignment!).</h2>
-        <h2>I've also had the chance to do some cool things such as leading my schools robotics club, <a onClick={() => openLightbox(0)} style={{color: "#0066CC", textDecoration: "underline", cursor: "pointer"}}>(check out the arm we built during my time there, which is one component of the entire open-sourced robot)</a>.</h2>
-        <h2>Whenever possible, I try to get involved in my community. I've had the opportunity of volunteer throughout my community with over 310 hours in areas such as STEM summer camps, my local city library and local city hospital.</h2>
-        <br/>
-        <h2>But enough about me... Let's get in touch!</h2>
-        <h2>If you're a student, I'd love to <mark style={markStyle}> work on a project and/or connect!</mark></h2>
-        <h2>If you're a recruiter, I'd love to <mark style={markStyle}>learn about your company and possible roles!</mark></h2>
-        <SRLWrapper
-          options = {{
-            buttons: {
-              showAutoplayButton: false,
-              showThumbnailsButton: false,
-            }
-          }}
-         >
-          <div style={{display: "none"}}>
-            <img src="robotic3.jpg"></img>
-            <img src="robotic4.jpg"></img>
-            <img src="robotic1.jpg"></img>
-            <img src="robotic2.jpg"></img>
-          </div>
-        </SRLWrapper>
-      </div>
-    )
-}
-
-const Projects = () => {
+const Projects = (props) => {
   return (
-    <div style = {sectionStyle} id="section2">
-      <h1 style = {introductoryHeadingStyle}> Feel free to check out a few of my projects</h1> 
+    <div >
+      <h1 style = {introductoryHeadingStyle}> Since you're here... <br/> Feel free to check out a few of my projects!</h1> 
       <div style={projectsBarStyle}>
         {projects.map((project, index) => {
           return (
-            <Project name={project.name} key={index} description={project.description} imageName={project.imageName} gitHubLink={project.gitHubLink} otherLink={project.otherLink}/>
+            <Project isMobile={props.isMobile} name={project.name} key={index} description={project.description} imageName={project.imageName} gitHubLink={project.gitHubLink} otherLink={project.otherLink}/>
           )
         })}
       </div>
@@ -184,20 +178,53 @@ const Projects = () => {
   )
 }
 
-const ContactMe = () => {
+const AboutMe = (props) => {
+  const { openLightbox, closeLightbox } = useLightbox()
   return (
-    <div style = {sectionStyle} id="section3">
+    <div>
+        <br/>
+        <h1 style = {introductoryHeadingStyle}>Here's a little bit about me</h1>  
+        <h2>I'm currently studying Computer Engineering at the University of Waterloo. Two of my favorite things are learning + coffee and I have a passion for programming. I also enjoy working on projects whenever I get the chance (AKA whenever I'm not working on a school assignment!).</h2>
+        <h2>I've also had the chance to do some cool things such as leading my schools robotics club, <a onClick={() => openLightbox(0)} style={{color: "#0066CC", textDecoration: "underline", cursor: "pointer"}}>(check out the arm we built during my time there, which is one component of the entire open-sourced robot)</a>.</h2>
+        <h2>Whenever possible, I try to get involved in my community. I've had the opportunity to volunteer throughout my community, with over 310 hours in areas such as STEM summer camps, my local city library and city hospital.</h2>
+        <h2>
+                But enough about me... Let's get in touch! 
+          <br/> If you're a student, I'd love to work on a project and/or connect! 
+          <br/> If you're a recruiter, I'd love to learn about your company and possible roles!
+        </h2>
+      <SRLWrapper
+        options = {{
+          buttons: {
+            showAutoplayButton: false,
+            showThumbnailsButton: false,
+          }
+        }}
+       >
+        <div style={{display: "none"}}>
+          <img style={{display: "none"}} src="robotic3.jpg"></img>
+          <img style={{display: "none"}} src="robotic4.jpg"></img>
+          <img style={{display: "none"}} src="robotic1.jpg"></img>
+          <img style={{display: "none"}} src="robotic2.jpg"></img>
+        </div>
+      </SRLWrapper>
+    </div>
+  )
+}
+
+const ContactMe = (props) => {
+  return (
+    <div>
       <h1 style = {introductoryHeadingStyle}> Let's talk!</h1> 
       <br /><br />
       <div style={{display: "flex", justifyContent: "center"}}>
-        <Form />
+        <Form isMobile={props.isMobile}/>
       </div>
-    
     </div>
   )
 }
 
 const sections =[HomePage, Projects, AboutMe, ContactMe];
+
 
 // markup
 class IndexPage extends React.Component  {
@@ -211,12 +238,24 @@ class IndexPage extends React.Component  {
         section1: false,
         section2: false,
         section3: false
-      }
+      },
+      isMobile: true,
+      width: 0,
     }
     
     this.onSectionEnter = this.onSectionEnter.bind(this);
     this.onSectionExit = this.onSectionExit.bind(this);
     this.highlightSection = this.highlightSection.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+  }
+
+  componentDidMount(){
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
+  }
+
+  handleResize = (e) => {
+    this.setState({isMobile: window.innerWidth <= 550, width: window.innerWidth})
   }
 
   highlightSection = (sectionNumber) => {
@@ -243,28 +282,30 @@ class IndexPage extends React.Component  {
 
   render(){
     return (
-        <main style={pageStyles}>
+        <main style={(this.state.isMobile) ?  pageStyleMobile : pageStyle}>
           <title>Adam Shamaa</title>
-          <SimpleReactLightbox>
-            <NavBar menuItems={navElements} selected={this.state.currentSectionNumber}/>
-            {sections.map((SingleSection, index) => {
-              return (
-                <Fade in={this.state.inView[`section${index}`]} timeout={{enter: 1000, exit: 500}} key={index}>
-                  <InView onChange={(inView, entry) => {
-                    if (inView) this.onSectionEnter(index)
-                    else this.onSectionExit(index)
-                    }}>
-                      <InView threshold={0.3} onChange={(inView, entry) => {
-                        if (inView) this.highlightSection(index)
+              <SimpleReactLightbox>
+              {this.state.width <= 650 ? null : <NavBar menuItems={navElements} selected={this.state.currentSectionNumber}/> }
+                {sections.map((SingleSection, index) => {
+                  return (
+                    <Fade in={this.state.inView[`section${index}`]} timeout={{enter: 1000, exit: 500}} key={index}>
+                      <InView threshold={0.1} onChange={(inView, entry) => {
+                        if (inView) this.onSectionEnter(index)
+                        else this.onSectionExit(index)
                         }}>
-                          {<SingleSection />}   
+                          <InView threshold={0.3} onChange={(inView, entry) => {
+                            if (inView) this.highlightSection(index)
+                            }}>
+                              <div style={(this.state.width <= 650) ? sectionStyleMobile : sectionStyle} id={`section${index}`}>
+                                {<SingleSection isMobile={this.state.isMobile}/>}   
+                              </div>
+                          </InView>
                       </InView>
-                  </InView>
-                </Fade>
-              )
-            })}
-          </SimpleReactLightbox>
-        </main>
+                    </Fade>
+                  )
+                })}
+              </SimpleReactLightbox>
+          </main>
     )
   }
 }
