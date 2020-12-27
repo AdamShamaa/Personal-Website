@@ -11,7 +11,8 @@ import { Link } from 'react-scroll'
     display: "flex",
     right: "2rem",
     top: "35%",
-    borderRadius: ".55rem"
+    borderRadius: ".55rem",
+    zIndex: "5"
   }
   
   const navElementsStyle = {
@@ -39,7 +40,7 @@ class NavBar extends React.Component {
               <Tabs orientation="vertical" style={navBarStyle}>
                   {this.props.menuItems.map((menuItem,index) => {
                       return (
-                      <Link to={`section${index}`} offset={-150} smooth={true} key = {index} >
+                      <Link to={`section${index}`} offset={-50} smooth={true} key = {index} >
                           <Tab 
                               key = {index} 
                               label={menuItem} 
