@@ -130,19 +130,52 @@ const inputData = [
             errors.content = "Please enter a message";
         }
 
-        this.setState({errors})
         if (!(errors.firstName || errors.lastName || errors.emailAddress || errors.content)) {
             try {
                 recaptchaRef.current.executeAsync();
             }catch(err){
-                console.log(err)
+               this.setState({errors: {
+                                        firstName: "Oh no! An error occured, please refresh the page and try again!",
+                                        lastName: "Oh no! An error occured, please refresh the page and try again!",
+                                        emailAddress: "Oh no! An error occured, please refresh the page and try again!",
+                                        content: "Oh no! An error occured, please refresh the page and try again!"
+                                    }})
             }
         }
+        this.setState({errors})
+        event.preventDefault();
      }
 
      handleVerification = () => {
-        this.setState({isVerified: true})
-     }
+        function encode(data) {
+            return Object.keys(data)
+                .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+                .join("&")
+          }
+        try {
+            fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: encode({
+                "form-name": "contactMe",
+                ...this.state.input
+            })
+            }).then((res) => {if (res.ok)this.setState({isVerified: true})})
+            .catch(error => this.setState({errors: {
+                firstName: "Oh no! An error occured, please refresh the page and try again!",
+                lastName: "Oh no! An error occured, please refresh the page and try again!",
+                emailAddress: "Oh no! An error occured, please refresh the page and try again!",
+                content: "Oh no! An error occured, please refresh the page and try again!"
+            }}))    
+        }catch(err) {
+            this.setState({errors: {
+                firstName: "Oh no! An error occured, please refresh the page and try again!",
+                lastName: "Oh no! An error occured, please refresh the page and try again!",
+                emailAddress: "Oh no! An error occured, please refresh the page and try again!",
+                content: "Oh no! An error occured, please refresh the page and try again!"
+            }})
+        }  
+    }
      
     render(){
         return(
@@ -154,7 +187,7 @@ const inputData = [
                             <h3 style={headerStyle}>I'll get back as soon as I can!</h3>
                         </div>
                 </div>
-                <form >
+                <form onSubmit={this.handleSubmit}>
                     {inputData.map((input,index) => {
                         return (
                         <FormControl style={formControlStyle} disabled={this.state.isVerified} key={index}>
@@ -181,11 +214,11 @@ const inputData = [
                             variant="contained"
                             endIcon={<CallMadeIcon />}
                             color="primary"
-                            style = {{backgroundColor: "#4287f5", margin:"1rem 0.3rem .3rem 0.3rem", maxHeight:"2.5rem", padding: "1.5rem"}}
-                            onClick={this.handleSubmit}
+                            style = {{backgroundColor: "#4287f5", margin:"1rem 0.3rem .3rem 0.3rem", padding: "1.08rem 1.6rem"}}
                             disabled={this.state.isVerified}
+                            type="submit"
                         >
-                            Send
+                            SEND
                         </Button>
                         <ReCAPTCHA 
                                 ref={recaptchaRef}
@@ -196,6 +229,14 @@ const inputData = [
                                 onChange={this.handleVerification}
                         />
                     </FormControl>
+                </form>
+                <form data-netlify="true" name="contactMe" method="post" hidden>
+                    <input type="hidden" name="form-name" value="contactMe" />
+                    <input name="firstName" type="text"/>
+                    <input name="lastName" type="text"/>
+                    <input name="emailAddress" type="text"/>
+                    <input name="content" type="text"/>
+                    <input type="submit"/>
                 </form>
             </Paper>
         )
