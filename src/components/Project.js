@@ -10,13 +10,6 @@ import Button from '@material-ui/core/Button';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import CallMadeIcon from '@material-ui/icons/CallMade';
 
-
-/**
- * Todo:
- * proptypes
- * finish projects, links, project informatoin
- */
-
 const cardStyle = {
     display: "flex",
     flexDirection: "column",
@@ -38,7 +31,7 @@ const cardMediaStyle = {
 }
 
 const projectInformationStyle = {
-    fontSize: "1.3rem",
+    fontSize: "1.5rem",
     margin: ".8rem",
     fontWeight: "500"
 }
@@ -47,13 +40,22 @@ const cardActionStyle = {
     justifyContent: "center"
 }
 
+const buttonStyle = {
+    fontSize: "2rem",
+    padding: ".5rem 1.5rem"
+}
+
+//Mobile Support
+const cardStyleMobile = {...cardStyle}
+cardStyleMobile.minWidth = "110%"
+
 class Project extends React.Component {
     constructor(props){
         super(props)
     }
     render(){
         return (
-            <Card style={cardStyle} key={this.props.key}>
+            <Card style={this.props.isMobile ? cardStyleMobile : cardStyle} key={this.props.key}>
                 <CardActionArea style={cardActionAreaStyle}>
                     <CardMedia>
                         <img 
@@ -66,8 +68,8 @@ class Project extends React.Component {
                     </h5>
                 </CardActionArea>
                 <CardActions style={cardActionStyle}>
-                    {this.props.gitHubLink ? <Button variant="outlined" href={this.props.gitHubLink} target="_blank"><GitHubIcon /></Button> : ""}
-                    {this.props.otherLink ? <Button variant="outlined" color="primary" href={this.props.otherLink} target="_blank"><CallMadeIcon/></Button> : ""}
+                    {this.props.gitHubLink ? <Button variant="outlined" href={this.props.gitHubLink} target="_blank" fontSize="inherit" style={buttonStyle}><GitHubIcon fontSize="inherit"/></Button> : ""}
+                    {this.props.otherLink ? <Button variant="outlined" color="primary" href={this.props.otherLink} target="_blank" fontSize="inherit" style={buttonStyle}><CallMadeIcon fontSize="inherit"/></Button> : ""}
                 </CardActions>
             </Card>
         )
