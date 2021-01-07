@@ -1,7 +1,11 @@
 html {
     font-size: 13px;
+    max-width: 100%;
+    overflow: "hidden";
 }
 
 h2 {
-    font-size: 1.7rem
+    font-size: 1.4rem;
+    line-height: 3rem;
+    margin: 2.5rem 0;
 }

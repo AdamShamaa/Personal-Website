@@ -15,10 +15,8 @@ import { InView } from 'react-intersection-observer';
 import "@fontsource/open-sans" 
 import "@fontsource/open-sans/600.css" // Weight 500.
 
-import SimpleReactLightbox from 'simple-react-lightbox'
-import { useLightbox } from 'simple-react-lightbox'
-import { SRLWrapper } from "simple-react-lightbox";
 import "../components/layout.css"
+
 
 // styles
 const pageStyle = {
@@ -82,6 +80,13 @@ const sectionStyle = {
   paddingRight: "100px"
 }
 
+const contactSectionStyle = {
+  maxWidth: "100%",
+  justifyContent: "center",
+  margin: "10vh 0",
+  paddingRight: "100px"
+}
+
 
 const projectsBarStyle = {
   display: "flex",
@@ -91,19 +96,13 @@ const projectsBarStyle = {
   minWidth: "100%"
 }
 
-const markStyle = {
-  display: "inline-block",
-  lineHeight: "0em",
-  paddingBottom: "0.5em",
-  position: "relative",
-  backgroundColor: "#15f4ee",
-  wrap: "wrap",
-  backgroundColor: "white"
-}
-
 //Mobile Styles
 const sectionStyleMobile = {...sectionStyle}
 sectionStyleMobile.paddingRight = "0px"
+
+const contactSectionStyleMobile = {...contactSectionStyle}
+contactSectionStyleMobile.paddingRight = "0px"
+contactSectionStyleMobile.minHeight = "30vh"
 
 const pageStyleMobile = {...pageStyle}
 pageStyleMobile.padding = "0 5%"
@@ -114,7 +113,7 @@ nameHeadingStyleMobile.marginLeft= "0"
 
 //data
 const attributes = ["Student", "Software Developer"]
-const navElements = ["Homepage", "Projects", "About Me", "Contact Me"]
+const navElements = ["Homepage", "Projects", "About / Contact"]
 const projects = [
   {
     name: "Food Service Comparison",
@@ -122,26 +121,20 @@ const projects = [
     imageName: "FoodServiceComparison.png",
     gitHubLink: "https://github.com/AdamShamaa/Food-Service-Comparison-Frontend"
   },{
-    name: "Slider Puzzle Solver",
-    description: "",
-    imageName: "SliderPuzzle.png",
-    gitHubLink: "https://github.com/AdamShamaa/SliderPuzzle"
-},{
-    name: "Amancom Security Systems",
-    description: "",
-    imageName: "Amancom-Website-Demo.png",
-    gitHubLink: "https://github.com/AdamShamaa/Amancom-Security-Systems",
-    otherLink: "https://amancom.ca/"
-},{
-    name: "Sorting Vizualizer",
-    description: "",
-    imageName: "SortingVisualizer.png",
-    gitHubLink: "https://github.com/AdamShamaa/Sorting-Visualizer-Stats"
-},{
     name: "Smart Image Resizer",
     description: "",
     imageName: "ImageResizer.gif",
     gitHubLink: "https://github.com/AdamShamaa/Smart-Image-Resizing"
+},{
+  name: "Sorting Vizualizer",
+  description: "",
+  imageName: "SortingVisualizer.png",
+  gitHubLink: "https://github.com/AdamShamaa/Sorting-Visualizer-Stats"
+},{
+  name: "Slider Puzzle Solver",
+  description: "",
+  imageName: "SliderPuzzle.png",
+  gitHubLink: "https://github.com/AdamShamaa/Slider-Puzzle"
 }]
 
 //Page Elements
@@ -149,7 +142,7 @@ const HomePage = (props) => {
   return (
     <div>
       <div style = {introductoryDivStyle}>
-        <h1 style = {introductoryHeadingStyle}>Hey There!</h1>  
+        <h1 style = {introductoryHeadingStyle}>Hey There!</h1> 
         <h2 style={props.isMobile ? nameHeadingStyleMobile: nameHeadingStyle}>I'm Adam Shamaa, </h2>
         {props.isMobile ? <br /> : null}
        <AttributeComponent attributes={attributes} style={attributeStyle} delayMS={1500}/>
@@ -179,34 +172,23 @@ const Projects = (props) => {
 }
 
 const AboutMe = (props) => {
-  const { openLightbox, closeLightbox } = useLightbox()
   return (
     <div>
         <br/>
         <h1 style = {introductoryHeadingStyle}>Here's a little bit about me</h1>  
-        <h2>I'm currently studying Computer Engineering at the University of Waterloo. Two of my favorite things are learning + coffee and I have a passion for programming. I also enjoy working on projects whenever I get the chance (AKA whenever I'm not working on a school assignment!).</h2>
-        <h2>I've also had the chance to do some cool things such as leading my schools robotics club, <a onClick={() => openLightbox(0)} style={{color: "#0066CC", textDecoration: "underline", cursor: "pointer"}}>(check out the arm we built during my time there, which is one component of the entire open-sourced robot)</a>.</h2>
-        <h2>Whenever possible, I try to get involved in my community. I've had the opportunity to volunteer throughout my community, with over 310 hours in areas such as STEM summer camps, my local city library and city hospital.</h2>
-        <h2>
-                But enough about me... Let's get in touch! 
-          <br/> If you're a student, I'd love to work on a project and/or connect! 
-          <br/> If you're a recruiter, I'd love to learn about your company and possible roles!
+        <h2>I'm currently studying Computer Engineering at the University of Waterloo. 
+          <br/>My two favorite things? Learning + Coffee.
+          <br/>I also enjoy working on projects whenever I get the chance (AKA whenever I'm not working on a school assignment!).
         </h2>
-      <SRLWrapper
-        options = {{
-          buttons: {
-            showAutoplayButton: false,
-            showThumbnailsButton: false,
-          }
-        }}
-       >
-        <div style={{display: "none"}}>
-          <img style={{display: "none"}} src="robotic3.jpg"></img>
-          <img style={{display: "none"}} src="robotic4.jpg"></img>
-          <img style={{display: "none"}} src="robotic1.jpg"></img>
-          <img style={{display: "none"}} src="robotic2.jpg"></img>
+        <h2>
+          But enough about me...
+        </h2>
+        <br /><br /><br /><br />
+        <h1 style = {introductoryHeadingStyle}> Let's talk!</h1> 
+        <br /><br />
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <Form isMobile={props.isMobile}/>
         </div>
-      </SRLWrapper>
     </div>
   )
 }
@@ -223,7 +205,7 @@ const ContactMe = (props) => {
   )
 }
 
-const sections =[HomePage, Projects, AboutMe, ContactMe];
+const sections =[HomePage, Projects, AboutMe];
 
 
 // markup
@@ -284,7 +266,6 @@ class IndexPage extends React.Component  {
     return (
         <main style={(this.state.isMobile) ?  pageStyleMobile : pageStyle}>
           <title>Adam Shamaa</title>
-              <SimpleReactLightbox>
               {this.state.width <= 650 ? null : <NavBar menuItems={navElements} selected={this.state.currentSectionNumber}/> }
                 {sections.map((SingleSection, index) => {
                   return (
@@ -297,14 +278,13 @@ class IndexPage extends React.Component  {
                             if (inView) this.highlightSection(index)
                             }}>
                               <div style={(this.state.width <= 650) ? sectionStyleMobile : sectionStyle} id={`section${index}`}>
-                                {<SingleSection isMobile={this.state.isMobile}/>}   
+                                {<SingleSection isMobile={this.state.isMobile}/>}  
                               </div>
                           </InView>
                       </InView>
                     </Fade>
                   )
-                })}
-              </SimpleReactLightbox>
+                })} 
           </main>
     )
   }
